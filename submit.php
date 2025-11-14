@@ -1,52 +1,59 @@
 <?php
-// Database configuration
-$host = "localhost";
-$dbname = "tunji";
+// Database connection
+$servername = "localhost";
 $username = "root";
 $password = "";
+$dbname = "tunji";
 
-try {
-    // Connect to database using PDO
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check if form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $fullname = $_POST['name'];
-        $email = $_POST['email'];
-        $subject = $_POST['subject'];
-        $message = $_POST['message'];
-
-
-        // Insert query
-        $sql = "INSERT INTO messages (name, email, subject, message) VALUES (:name, :email, :subject, :message)";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':name', $fullname);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':subject', $subject);
-        $stmt->bindParam(':message', $message);
-
-        if ($stmt->execute()) {
-            echo "Record inserted successfully!";
-            header("Location: index.html");
-            exit();
-            
-        } else {
-            echo "Error inserting data.";
-        }
-    }
-
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Collect form data
+$name = $_POST['name'];
+$email = $_POST['email'];
+$subject = $_POST['subject'];
+$message = $_POST['message'];
+
+// 1️⃣ CHECK IF EMAIL ALREADY EXISTS
+$checkEmail = "SELECT * FROM messages WHERE email = '$email'";
+$result = $conn->query($checkEmail);
+
+if ($result->num_rows > 0) {
+    $status = "exists"; // Email already in database
+} else {
+    // 2️⃣ INSERT INTO DATABASE
+    $sql = "INSERT INTO messages (name, email, subject, message)
+            VALUES ('$name', '$email', '$subject', '$message')";
+    
+    if ($conn->query($sql) === TRUE) {
+        $status = "success";
+
+        // 3️⃣ SEND EMAIL TO USER
+        $to = $email;
+        $email_subject = "Thank you for contacting us!";
+        $email_body = "Hello $name,\n\nThank you for reaching out.\nWe have received your message:\n\nSubject: $subject\nMessage: $message\n\nWe will get back to you shortly.\n\nBest Regards,\nYour Company Name";
+
+        $headers = "From: noreply@yourcompany.com";
+
+        mail($to, $email_subject, $email_body, $headers);
+
+    } else {
+        $status = "error";
+        $error_message = $conn->error;
+    }
+}
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Success</title>
+    <title>Response</title>
     <style>
-        /* Modal background */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -58,8 +65,6 @@ try {
             justify-content: center;
             align-items: center;
         }
-
-        /* Modal box */
         .modal-box {
             background: #fff;
             padding: 25px;
@@ -67,18 +72,7 @@ try {
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            animation: fadeIn 0.4s ease;
         }
-
-        .modal-box h2 {
-            color: #155724;
-            margin-bottom: 20px;
-        }
-
-        .modal-box p {
-            font-size: 16px;
-        }
-
         .modal-box button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -88,39 +82,44 @@ try {
             border-radius: 5px;
             cursor: pointer;
         }
-
         .modal-box button:hover {
             background: #218838;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-<?php if ($success): ?>
+<?php if ($status === "exists"): ?>
     <div class="modal-overlay">
         <div class="modal-box">
-            <h2>Success ✔</h2>
-            <p>Your message has been submitted successfully!</p>
+            <h2 style="color:red;">Email Exists ❌</h2>
+            <p>This email is already registered in our system.</p>
             <button onclick="goBack()">OK</button>
         </div>
     </div>
 
     <script>
         function goBack() {
-            window.location.href = "index.html";  // ← your HTML page
+            window.location.href = "index.html";
         }
+    </script>
 
-        // Auto-close modal after 3 seconds
-        setTimeout(goBack, 3000);
+<?php elseif ($status === "success"): ?>
+    <div class="modal-overlay">
+        <div class="modal-box">
+            <h2 style="color:green;">Success ✔</h2>
+            <p>Your message was submitted and an email has been sent to you!</p>
+            <button onclick="goBack()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "index.html";
+        }
     </script>
 
 <?php else: ?>
-
     <div class="modal-overlay">
         <div class="modal-box">
             <h2 style="color:red;">Error ❌</h2>
@@ -135,7 +134,6 @@ try {
             window.location.href = "index.html";
         }
     </script>
-
 <?php endif; ?>
 
 </body>
