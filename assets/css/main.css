@@ -2443,3 +2443,16 @@ input, select, textarea {
 					}
 
 	}
+
+#success-message{
+	display:none;
+	margin:20px auto;
+    padding:15px;
+    width:90%;
+    max-width:400px;
+    background:#d4edda;
+    color:#155724;
+    border:1px solid #c3e6cb;
+    border-radius:5px;
+    text-align:center;
+}

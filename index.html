@@ -179,6 +179,10 @@ As a lifelong learner and problem-solver, I’m passionate about using automatio
 				</div>
 			</article>
 
+<div id="success-message">
+    Your message has been submitted successfully!
+</div>
+
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -186,6 +190,18 @@ As a lifelong learner and problem-solver, I’m passionate about using automatio
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+<script>
+    // Check if URL contains ?status=success
+    const urlParams = new URLSearchParams(window.location.search);
 
+    if (urlParams.get("status") === "success") {
+        document.getElementById("success-message").style.display = "block";
+
+        // Optional: hide message after 5 seconds
+        setTimeout(() => {
+            document.getElementById("success-message").style.display = "none";
+        }, 5000);
+    }
+</script>
 	</body>
 </html>
