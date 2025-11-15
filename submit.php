@@ -1,9 +1,11 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "tunji";
+$env = parse_ini_file(__DIR__ . '/.env');
+
+// Database connections
+$db_host = $env['DB_HOST'];
+$db_user = $env['DB_USER'];
+$db_pass = $env['DB_PASS'];
+$db_name = $env['DB_NAME'];
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
