@@ -7,7 +7,7 @@ $db_user = $env['DB_USER'];
 $db_pass = $env['DB_PASS'];
 $db_name = $env['DB_NAME'];
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
 // Check connection
 if ($conn->connect_error) {
