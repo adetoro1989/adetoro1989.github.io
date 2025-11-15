@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
         $email_subject = "Thank you for contacting us!";
         $email_body = "Hello $name,\n\nThank you for reaching out.\nWe have received your message:\n\nSubject: $subject\nMessage: $message\n\nWe will get back to you shortly.\n\nBest Regards,\nYour Company Name";
 
-        $headers = "From: noreply@yourcompany.com";
+        $headers = "From: admin@olanrewajuadetoro.com";
 
         mail($to, $email_subject, $email_body, $headers);
 
