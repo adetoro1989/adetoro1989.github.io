@@ -22,6 +22,8 @@ jobs:
         server-dir: /home/olanrew2/public_html/
         exclude: |
           **/.git*
-          **/.git*/**
+          **/.*
+          **/.*/**
           **/node_modules/**
-          **/.vscode
+          **/.DS_Store
+          **/Thumbs.db
