@@ -2,13 +2,13 @@
 //$env = parse_ini_file(__DIR__ . '/.env');
 
 // Database connections
-$db_host = "localhost"
+$db_host = "localhost";
 //$env['DB_HOST'];
-$db_user = "olanrew2_tunji"
+$db_user = "olanrew2_tunji";
 //$env['DB_USER'];
-$db_pass = "yn.4N[8_JiRbM-VR"
+$db_pass = "yn.4N[8_JiRbM-VR";
 //$env['DB_PASS'];
-$db_name = "olanrew2_tunji"
+$db_name = "olanrew2_tunji";
 //$env['DB_NAME'];
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
