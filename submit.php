@@ -1,11 +1,15 @@
 <?php
-$env = parse_ini_file(__DIR__ . '/.env');
+//$env = parse_ini_file(__DIR__ . '/.env');
 
 // Database connections
-$db_host = $env['DB_HOST'];
-$db_user = $env['DB_USER'];
-$db_pass = $env['DB_PASS'];
-$db_name = $env['DB_NAME'];
+$db_host = "localhost"
+//$env['DB_HOST'];
+$db_user = "olanrew2_tunji"
+//$env['DB_USER'];
+$db_pass = "yn.4N[8_JiRbM-VR"
+//$env['DB_PASS'];
+$db_name = "olanrew2_tunji"
+//$env['DB_NAME'];
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 
@@ -31,22 +35,7 @@ if ($result->num_rows > 0) {
     $sql = "INSERT INTO messages (name, email, subject, message)
             VALUES ('$name', '$email', '$subject', '$message')";
     
-    if ($conn->query($sql) === TRUE) {
-        $status = "success";
-
-        // 3️⃣ SEND EMAIL TO USER
-        $to = $email;
-        $email_subject = "Thank you for contacting us!";
-        $email_body = "Hello $name,\n\nThank you for reaching out.\nWe have received your message:\n\nSubject: $subject\nMessage: $message\n\nWe will get back to you shortly.\n\nBest Regards,\nYour Company Name";
-
-        $headers = "From: admin@olanrewajuadetoro.com";
-
-        mail($to, $email_subject, $email_body, $headers);
-
-    } else {
-        $status = "error";
-        $error_message = $conn->error;
-    }
+    
 }
 
 $conn->close();
