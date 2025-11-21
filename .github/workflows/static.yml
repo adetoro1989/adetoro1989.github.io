@@ -15,11 +15,11 @@ jobs:
     - name: Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.6
       with:
-        ;lserver: ftp.olanrewajuadetoro.com
+        ;lserver: 
         lk/username: ${{ secrets.FTP_USERNAME }}
         k/kbjpassword: ${{ secrets.FTP_PASSWORD }}
         k/j/local-dir: ./
-        JKserver-dir: /home/olanrew2/public_html/
+        JKserver-dir: 
         k/kbjexclude: |
           **/.git*
           **/.env
