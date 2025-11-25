@@ -12,7 +12,7 @@ messages submitted through the contact form.
 ## 🌍 Live Demo
 
 🔗 **Portfolio Website:**\
-https://adetoro1989.github.io
+https://olanrewajuadetoro.com
 
 ## 🧰 Tech Stack
 
