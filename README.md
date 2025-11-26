@@ -42,6 +42,8 @@ Then i also deployed another docker image using the mysql image for the database
 
 I ensured both containers were deployed in the same network and they could talk to each other. I used the "docker exec" command to enter into the container to make adjustments to the database server and the apache and php services as well.
 
+I used the principle of CRUD (Create, Read, Update and Delete) to manage messages sent to me from my portfolio. This was done using the PHP and Mysql backend.
+
 After testing i setup a CI/CD pipeline on github action to automatically synch updates to my applications.
 
 ## ⭐ Features
