@@ -7,7 +7,7 @@ industry experience.
 
 The portfolio is built using **HTML, CSS, JavaScript, and PHP**, and
 includes an admin dashboard where I can securely view and manage
-messages submitted through the contact form.
+messages submitted through the contact form on the portfolio site.
 
 ## 🌍 Live Demo
 
